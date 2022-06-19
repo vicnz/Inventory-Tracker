@@ -1,0 +1,19 @@
+TODOs:
+
+[DONE] - Primary Database Schema
+[FINALIZING] - Database Schema Optimization & Consolidation
+[DONE] - Primary UI Root Layout
+[DONE] - Inventory UI
+[DONE] - Imports UI
+[DONE] - Exports UI
+[DONE] - Categories UI
+[DONE] - Clients UI
+[DONE] - Warehouse UI
+[ONGOING] - Overall UI
+[ONGOING] - Dashboard Content / Summary Data
+# PENDING AND AWAITING
+[PENDING] - Export Operation (Every Page)
+[PENDING] - Import Operation (Every Page)
+[PROPOSED] - Forecasting (Imports and Exports)
+[PROPOSED] - User Authentication
+[PROPOSED] - Online Access

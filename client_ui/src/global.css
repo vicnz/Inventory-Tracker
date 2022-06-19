@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+}
+
+input,
+select,
+textarea,
+.selectable,
+*[contenteditable="true"] {
+    user-select: auto;
+}
+
+
+*::-webkit-scrollbar {
+    width: 1.4rem;
+    height: 1.4rem;
+    background-color: transparent;
+}
+
+.dark-mode *::-webkit-scrollbar {
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-track:vertical {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+*::-webkit-scrollbar-track:horizontal {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode *::-webkit-scrollbar-track {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+*::-webkit-scrollbar-thumb {
+    min-width: 3rem;
+    min-height: 3rem;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 0.4rem solid transparent;
+    -moz-background-clip: content;
+    /* Firefox 3.6 */
+    -webkit-background-clip: content;
+    /* Safari 4? Chrome 6? */
+    background-clip: content-box;
+    border-radius: 1rem;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-color: transparent;
+}
+
+.dark-mode *::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: transparent;
+}
+
+.dark-mode *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-color: transparent;
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode *::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.25) #ffffff;
+}
+
+.dark-mode * {
+    scrollbar-color: rgba(255, 255, 255, 0.25) #25282c;
+}
