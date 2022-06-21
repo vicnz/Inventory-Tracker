@@ -33,6 +33,7 @@ const createWindow = async () => {
         minWidth: 450,
         minHeight: 300,
         webPreferences: {
+            textAreasAreResizable: false,
             preload: isProduction ? path.join(process.cwd(), '/resources/app/src/preload.js') : path.join(__dirname, '/preload.js'),
         }
     });

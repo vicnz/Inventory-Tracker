@@ -214,3 +214,32 @@ export const importsDataAudited = async () => {
         rows,
     };
 }
+
+export const exportsDataAudited = async () => {
+    /**DEFINE COLUMNS*/
+    const columns = [
+        { label: "Id", type: "string", name: "id" },
+        { label: "Product", type: "string", name: "product" },
+        { label: "Description", type: "string", name: "description" },
+        { label: "Order Quantity", type: "number", name: "quantity" },
+        { label: "Unit Price", type: "currency", name: "price" },
+        { label: "Total Price", type: "currency", name: "total" },
+        { label: "Shipment", type: "date", name: "shipment" },
+        { label: "Client", type: "string", name: "customer_name" },
+        { label: "Company", type: "string", name: "customer_company" },
+        { label: "Contact", type: "string", name: "customer_contact" },
+        { label: "Email", type: "string", name: "customer_email" },
+    ];
+    const columnRef = columns.map((item) => item.name);
+    const result = await window?.exports?.audited();
+    const rows = result?.data?.map((row) => {
+        return columnRef.map((key) => {
+            return row[key];
+        });
+    });
+
+    return {
+        columns,
+        rows,
+    };
+}

@@ -140,7 +140,7 @@
 <form class="content" use:useForm action="/">
   <Fade animateIn>
     <!-- @TITLE BANNER -->
-    <TitleBanner title="Add New Export" hasBack="/exports">
+    <TitleBanner title="ADD ORDER" hasBack="/exports">
       <div class="btn-group">
         <!-- @ON SUBMIT BUTTON -->
         <input type="submit" value="Add New" class="btn" />

@@ -63,6 +63,25 @@ module.exports = function () {
             })
 
             return result;
+        },
+        audited: async () => {
+            const result = await ipcRenderer.invoke('all', {
+                sql: `SELECT * FROM outgoing_arrived_view`,
+                params: []
+            })
+            if (result?.error) {
+                return []
+            } else {
+                return result;
+            }
+        },
+        deleteAudited: async (ids) => {
+            const result = await ipcRenderer.invoke('delete', {
+                sql: `DELETE FROM outgoing WHERE arrived = 1 AND id = ?`,
+                params: ids
+            })
+
+            return result;
         }
     }
 }
