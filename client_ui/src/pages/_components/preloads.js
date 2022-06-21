@@ -153,3 +153,34 @@ export const exportsData = async () => {
         rows,
     };
 }
+
+/**
+ * * DISCARDED ITEMS
+ * @returns {{rows: Array<string>, columns: Array<Array<any>>}}
+ */
+export const preloadDiscardedInventory = async () => {
+    const columns = [
+        { label: "ID", type: "string", name: "discard_id" },
+        { label: "Product", type: "string", name: "product" },
+        { label: "Description", type: "string", name: "description" },
+        { label: "Category", type: "string", name: "category" },
+        { label: "Quantity", type: "number", name: "quantity" },
+        { label: "Max (Quantity)", type: "number", name: "max" },
+        { label: "Warehouse", type: "string", name: "warehouse" },
+        { label: "Address", type: "string", name: "address" },
+        { label: "ODT", type: "string", name: "timestamp" }
+    ]
+
+    const columnRef = columns.map((item) => item.name);
+    const result = await window?.inventory?.discarded();
+    const rows = result?.data?.map((row) => {
+        return columnRef.map((key) => {
+            return row[key];
+        });
+    });
+
+    return {
+        columns,
+        rows,
+    };
+}

@@ -99,6 +99,35 @@ module.exports = function () {
                 params: [...ids]
             })
             return result
+        },
+        /**
+         * * GET DISCARDED ITEMS
+         * @returns {Array<any>}
+         */
+        discarded: async () => {
+            let result = await ipcRenderer.invoke('all', {
+                sql: `SELECT * FROM master_discarded ORDER BY timestamp DESC`,
+                params: []
+            })
+            if (result.error) {
+                return []
+            } else {
+                return result;
+            }
+        },
+        discardedOne: async (id) => {
+            let result = await ipcRenderer.invoke('get', {
+                sql: `SELECT * FROM master_discarded WHERE discard_id = ?`,
+                params: id
+            })
+            return result;
+        },
+        discardedDelete: async (ids) => {
+            let result = await ipcRenderer.invoke('delete', {
+                sql: `DELETE FROM master_discarded WHERE discard_id = ?`,
+                params: ids
+            })
+            return result;
         }
     }
 }

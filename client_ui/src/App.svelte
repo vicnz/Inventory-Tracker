@@ -6,7 +6,7 @@
 
   /**REGISTER CHART JS*/
   import { Chart, registerables } from "./lib/chartjs/chart.esm";
-  let splashscreen = true;
+  let splashscreen = true; //toggle false during development
 
   onMount(() => {
     Chart.register(...registerables); /**REGISTER CHARTS*/

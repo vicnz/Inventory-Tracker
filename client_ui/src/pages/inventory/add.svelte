@@ -2,7 +2,7 @@
   @ INVENTORY (ADD) PAGE
 -->
 <script>
-  import { goto, beforeUrlChange } from "@roxi/routify";
+  import { goto, beforeUrlChange, params } from "@roxi/routify";
   import { onMount } from "svelte";
   /**COMPONENTS*/
   import TitleBanner from "../_components/TitleBanner.svelte";
@@ -15,16 +15,31 @@
    */
   $beforeUrlChange(async (event, route) => {
     /**CHECK IF DATA IS MUTATED OR ISSAVING*/
-    if (JSON.stringify(INVENTORY) === JSON.stringify(template)) {
-      return true;
-    } else if (isSaving) {
-      return true;
-    } else {
-      const request = await pageLeaveHandler("Unsaved Changes, proceed?");
-      if (request) {
+    if (isRestoring) {
+      if (JSON.stringify(restoreData) === JSON.stringify(template)) {
+        return true;
+      } else if (isSaving) {
         return true;
       } else {
-        return false;
+        const request = await pageLeaveHandler("Unsaved Changes, proceed?");
+        if (request) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      if (JSON.stringify(INVENTORY) === JSON.stringify(template)) {
+        return true;
+      } else if (isSaving) {
+        return true;
+      } else {
+        const request = await pageLeaveHandler("Unsaved Changes, proceed?");
+        if (request) {
+          return true;
+        } else {
+          return false;
+        }
       }
     }
   });
@@ -32,11 +47,19 @@
   /**
    * * VARIABLES
    */
+
+  let isRestoring = $params?.restore;
+  let restoreData = {};
   let categoryList = [];
   let warehouseList = [];
   let isSaving = false;
   let template = { ...INVENTORY };
 
+  async function loadRestoreData() {
+    let result = await window?.inventory?.discardedOne($params?.id);
+    restoreData = { ...result, id: "" };
+    template = { ...restoreData };
+  }
   /**
    *  * FORM PROXY
    * @param {HTMLFormElement} node
@@ -105,11 +128,17 @@
     const dialog = await window.dialogs.message({
       type: "warning",
       title: "Clear",
-      message: "Clearing field values, do you want to proceed?",
+      message: isRestoring
+        ? "Undo Changes?"
+        : "Clearing field values, do you want to proceed?",
       buttons: ["OK", "Cancel"],
     });
     if (dialog.response === 0) {
-      template = clear("inventory");
+      if (isRestoring) {
+        template = { ...restoreData };
+      } else {
+        template = clear("inventory");
+      }
     } else {
       return;
     }
@@ -135,6 +164,9 @@
 
   /**ON MOUNT PRELOAD*/
   onMount(() => {
+    if (isRestoring) {
+      loadRestoreData();
+    }
     preloadedData();
   });
 </script>
@@ -142,12 +174,21 @@
 <form class="content" use:useForm action="/">
   <Fade animateIn>
     <!-- @TITLE BANNER -->
-    <TitleBanner title="Add Inventory" hasBack="/inventory">
+    <TitleBanner
+      title={isRestoring ? "RESTORE ITEM" : "ADD ITEM"}
+      hasBack={isRestoring ? "/inventory/discarded" : "/inventory"}
+    >
       <div class="btn-group">
         <!-- @ON SUBMIT BUTTON -->
-        <input type="submit" value="Add New" class="btn" />
+        <input
+          type="submit"
+          value={isRestoring ? "Restore" : "Add New"}
+          class="btn"
+        />
         <!-- @ON CLEAR FORM BUTTON -->
-        <button class="btn" on:click|preventDefault={onClear}> Clear </button>
+        <button class="btn" on:click|preventDefault={onClear}>
+          {isRestoring ? "Undo" : "Clear"}
+        </button>
       </div>
     </TitleBanner>
 
