@@ -1,7 +1,7 @@
 {
-  "name": "Warehouse Inventory Tracker",
+  "name": "Inventory Tracker",
   "productName": "warehouse-inv-tracker",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "Warehouse Inventory Tracker, Tracks incoming/outgoing/current stocked items in warehouses",
   "main": "src/index.js",
   "scripts": {
