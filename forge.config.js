@@ -1,6 +1,11 @@
 // const {utils: {fromBuildIdentifier}} = require('@electron-forge/core')
-const { mkdirSync, copyFileSync, existsSync, lstatSync, readdirSync } = require('fs')
+const { mkdirSync, copyFileSync, existsSync, lstatSync, readdirSync, openSync, closeSync } = require('fs')
 const { join } = require('path')
+
+const { exec } = require('child_process')
+/**GENERATING DATABASE */
+const Database = require('better-sqlite3')
+const { create, createStatements } = require('./forge.utils')
 const ignoreLists = [
     "/.gitignore",
     "/client_ui",
@@ -13,6 +18,7 @@ const ignoreLists = [
     "/TODO.txt",
     "/README.md"
 ]
+
 
 
 module.exports = {
@@ -51,13 +57,17 @@ module.exports = {
     hooks: {
         //generate assets
         generateAssets: async (forgeConfig, platform, arch) => {
-            console.log('\n@generating assets\n')
+            console.log('\n🕑 Generating Assets...\n')
             if (!existsSync(join(__dirname, '/assets/'))) {
                 mkdirSync(join(__dirname, '/assets/'))
             }
-            copyFileSync(join(__dirname, `app.dev.db`), join(__dirname, 'assets/app.db')) // copy database file
-            copyFileSync(join(__dirname, `logo.ico`), join(__dirname, 'assets/favicon.ico')) //copy app icon
+            // copyFileSync(join(__dirname, `app.dev.db`), join(__dirname, 'assets/app.db')) // copy database file
+            console.log(`📦 Initializing Database...`)
+            initDatabase(); /**INITIALIZE DATABASE */
+            console.log(`🪟 Building Client UI...`)
+            exec(`cd client_ui && npm run build`, (error) => console.log(error));
             copyFolder(join(__dirname, 'client_ui/dist'), join(__dirname, 'assets/ui'))
+            copyFileSync(join(__dirname, `logo.ico`), join(__dirname, 'assets/favicon.ico')) //copy app icon
         }
     }
 }
@@ -77,4 +87,16 @@ function copyFolder(from, to) {
     }
 }
 
+/**
+ * CREATE DATABASE FILE
+ * @param {any} database 
+ */
+function initDatabase() {
+    closeSync(openSync(join(__dirname, '/assets/app.db'))); /**CREATE DATABASE FILE */
+    const path = join(__dirname, 'assets/app.db')
+    let database = new Database(path)
 
+    /**CREATE QUERY */
+    create(database, createStatements)
+    database.close()
+}
