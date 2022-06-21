@@ -184,3 +184,33 @@ export const preloadDiscardedInventory = async () => {
         rows,
     };
 }
+
+export const importsDataAudited = async () => {
+    /**DEFINE COLUMNS*/
+    const columns = [
+        { label: "Id", type: "string", name: "id" },
+        { label: "Product", type: "string", name: "product" },
+        { label: "Description", type: "string", name: "description" },
+        { label: "Order Quantity", type: "number", name: "quantity" },
+        { label: "Unit Price", type: "currency", name: "price" },
+        { label: "Total Price", type: "currency", name: "total" },
+        { label: "Shipment", type: "date", name: "shipment" },
+        { label: "Arrival", type: "date", name: "arrival" },
+        { label: "Supplier", type: "string", name: "supplier_name" },
+        { label: "Company", type: "string", name: "supplier_company" },
+        { label: "Contact", type: "string", name: "supplier_contact" },
+        { label: "Email", type: "string", name: "supplier_email" },
+    ];
+    const columnRef = columns.map((item) => item.name);
+    const result = await window?.imports?.importsAudited();
+    const rows = result?.data?.map((row) => {
+        return columnRef.map((key) => {
+            return row[key];
+        });
+    });
+
+    return {
+        columns,
+        rows,
+    };
+}

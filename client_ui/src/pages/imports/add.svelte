@@ -144,7 +144,7 @@
 <form class="content" use:useForm action="/">
   <Fade animateIn>
     <!-- @TITLE BANNER -->
-    <TitleBanner title="Add New Order" hasBack="/imports">
+    <TitleBanner title="ADD ORDER" hasBack="/imports">
       <div class="btn-group">
         <!-- @ON SUBMIT BUTTON -->
         <input type="submit" value="Add New" class="btn" />

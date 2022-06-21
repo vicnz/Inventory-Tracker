@@ -88,9 +88,9 @@
           <button class="btn">Export</button>
         </div>
         &nbsp;
-        <button class="btn" data-title="TODO Feature" data-toggle="tooltip"
-          >Audited</button
-        >
+        <button class="btn" on:click={() => $goto("/imports/audited")}>
+          Audited
+        </button>
         <!--TODO-->
       </div>
     </TitleBanner>

@@ -139,7 +139,7 @@
 <form action="/" class="content" use:useForm>
   <Fade animateIn>
     <!-- @FORM TITLEBAR -->
-    <TitleBanner title="Edit Item" hasBack="/inventory">
+    <TitleBanner title="EDIT ITEM" hasBack="/inventory">
       <div class="btn-group">
         <!--@ SAVE BUTTON-->
         <input type="submit" value="Save" class="btn" disabled={!enableForm} />

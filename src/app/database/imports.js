@@ -30,10 +30,10 @@ module.exports = function () {
                 return result;
             }
         },
-                /**
-         * GET ONE IMPORT
-         * @param {String} id 
-         */
+        /**
+ * GET ONE IMPORT
+ * @param {String} id 
+ */
         getOne: async (id) => {
             let result = await ipcRenderer.invoke('get', {
                 sql: 'SELECT * FROM ingoing WHERE id = ?',
@@ -93,6 +93,24 @@ module.exports = function () {
                 params: [...ids]
             })
             return result
+        },
+        importsAudited: async () => {
+            let result = await ipcRenderer.invoke('all', {
+                sql: `SELECT * FROM ingoing_arrived_view`,
+                params: []
+            })
+            if (result?.error) {
+                return []
+            } else {
+                return result
+            }
+        },
+        deleteAudited: async (ids) => {
+            let result = await ipcRenderer.invoke('delete', {
+                sql: `DELETE FROM ingoing WHERE arrived = 1 AND id = ?`,
+                params: ids
+            })
+            return result;
         }
     }
 }
