@@ -51,7 +51,7 @@ module.exports = {
     hooks: {
         //generate assets
         generateAssets: async (forgeConfig, platform, arch) => {
-            console.log('\n@generating assets\n')
+            console.log('\n🕑 generating assets\n')
             if (!existsSync(join(__dirname, '/assets/'))) {
                 mkdirSync(join(__dirname, '/assets/'))
             }

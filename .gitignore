@@ -96,3 +96,4 @@ assets/
 /dev
 /data-sets
 *dev*.sql
+app.dev.db
