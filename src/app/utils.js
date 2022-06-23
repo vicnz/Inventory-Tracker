@@ -1,33 +1,19 @@
-const { contextBridge, ipcMain, dialog, app, ipcRenderer } = require('electron')
+const { contextBridge, ipcMain, app, dialog, ipcRenderer } = require('electron')
+const { join } = require('path')
+const { writeFile } = require('fs/promises')
 const { randomUUID } = require('crypto')
+const Paparse = require('./papaparse.min.js')
 
 module.exports.main = async (mainWindow, ...others) => {
-    ipcMain.handle('onsave', async (event, data) => {
+    ipcMain.handle('save', async (event, data) => {
         let returned = await dialog.showSaveDialog(mainWindow, {
             title: "Save File",
-            message: "Save Backup File",
-            defaultPath: app.getPath("documents"),
+            defaultPath: app.getPath("downloads"),
             filters: [
-                { name: 'All Files', extensions: ['*'] },
-                { name: 'Database', extensions: ['db', 'sqlite'] }
-            ]
-
-        })
-        return returned;
-    })
-
-    ipcMain.handle('onopen', async (event, data) => {
-        //TODO
-        let returned = await dialog.showOpenDialog(mainWindow, {
-            title: "Save File",
-            message: "Save Backup File",
-            defaultPath: app.getPath("documents"),
-            filters: [
-                { name: 'All Files', extensions: ['*'] },
-                { name: 'db', extensions: ['Database', 'sqlite'] }
+                { name: "All Files", extensions: ["*"] },
+                { name: "CSV (Comma Delimited Values)", extensions: ["csv"] }
             ],
-            properties: ['dontAddToRecent', 'promptToCreate']
-
+            ...data
         })
         return returned;
     })
@@ -37,14 +23,29 @@ module.exports.renderer = () => {
     contextBridge.exposeInMainWorld('utils', {
         /**?RANDOM ID GENERATOR */
         generateID: () => randomUUID(),
-        /**SAVE DIALOG */
-        saveDialog: async () => {
-            //TODO
-            let response = await ipcRenderer.invoke('onsave', {})
-            console.log(response);
-        },
-        openDialog: async () => {
-            //TODO
+        export: async (ids, column, table) => {
+            /**FETCH DATA FROM TABLE */
+            let result = await ipcRenderer.invoke('get-many', {
+                sql: `SELECT * FROM ${table} WHERE ${column} = ?`,
+                params: ids
+            })
+
+            if (result?.error) {
+                return { error: result.error }
+            } else {
+                /**CHOOSE FILE */
+                const savePath = await ipcRenderer.invoke('save', {})
+                if (savePath.canceled) {
+                    return;
+                } else {
+                    let parsed = Paparse.unparse(result, {})
+                    writeFile(savePath.filePath, parsed).then(async () => {
+                        await ipcRenderer.invoke('show-message-dialog', { type: 'info', title: 'Export Successful', message: `File was save at ${savePath.filePath}` })
+                    }).catch(async error => {
+                        await ipcRenderer.invoke('show-error-dialog', { title: 'Error', message: "Error Saving File" });
+                    })
+                }
+            }
         }
     });
 }

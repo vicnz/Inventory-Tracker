@@ -6,6 +6,7 @@
   import DataTable from "../../lib/DataTable/index.svelte";
   import { pageLeaveHandler } from "../_components/utils";
   import { preloadDiscardedInventory as preload } from "../_components/preloads";
+  import ExportHandler from "../_components/ExportHandler.svelte";
 
   /**HANDLE PAGE LEAV*/
   $beforeUrlChange(async (event, route) => {
@@ -75,9 +76,20 @@
   <Fade animateIn>
     <!-- @ HEADER -->
     <TitleBar title="DISCONTINUED" hasBack="/inventory">
-      <button class="btn" disabled={checked.length < 1} on:click={deleteForever}
-        >Delete</button
+      <ExportHandler
+        {checked}
+        dataType="csv"
+        tableName={`master_discarded`}
+        column="discard_id"
+      />
+      &nbsp;
+      <button
+        class="btn"
+        disabled={checked.length < 1}
+        on:click={deleteForever}
       >
+        Delete
+      </button>
     </TitleBar>
     <br />
     <hr />
