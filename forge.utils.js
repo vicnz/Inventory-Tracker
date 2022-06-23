@@ -11,7 +11,8 @@ module.exports.ignoreLists = [
     "/schema.dev.sql",
     "/schemadata.dev.sql",
     "/TODO.txt",
-    "/README.md"
+    "/README.md",
+    "/dev-test"
 ]
 /**
  * 

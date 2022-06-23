@@ -1,8 +1,8 @@
 // const {utils: {fromBuildIdentifier}} = require('@electron-forge/core')
-const { mkdirSync, copyFileSync, existsSync, lstatSync, readdirSync, openSync, closeSync } = require('fs')
+const { mkdirSync, copyFileSync, existsSync, lstatSync, readdirSync, rmSync, rm } = require('fs')
 const { join } = require('path')
 
-const { exec } = require('child_process')
+const { execSync } = require('child_process')
 /**GENERATING DATABASE */
 // const Database = require('better-sqlite3')
 const { ignoreLists } = require('./forge.utils')
@@ -43,17 +43,22 @@ module.exports = {
     hooks: {
         //generate assets
         generateAssets: async (forgeConfig, platform, arch) => {
-            console.log('\n🕑 generating assets\n')
-            if (!existsSync(join(__dirname, '/assets/'))) {
-                mkdirSync(join(__dirname, '/assets/'))
+            console.log('\n🕑 Generating Assets\n')
+            if (existsSync(join(__dirname, 'assets/'))) {
+                rmSync(join(__dirname, 'assets/'), { recursive: true, force: true })
+                mkdirSync(join(__dirname, 'assets/'))
+            } else {
+                mkdirSync(join(__dirname, 'assets/'))
             }
-            console.log(`📦 Initializing Database...`)
+            console.log("✔️  Assets Folder Creation...")
+
             copyFileSync(join(__dirname, `app.dev.db`), join(__dirname, '/assets/app.db')) // copy database file
             // initDatabase(); /**INITIALIZE DATABASE */
-            console.log(`🪟  Building Client UI...`)
-            exec(`cd client_ui && npm run build`, (error) => { if (error) console.log(error) });
+            console.log(`✔️  Database Initialized...`)
+            execSync(`cd client_ui && npm run build`, (error) => { if (error) console.log(error) });
             copyFolder(join(__dirname, 'client_ui/dist'), join(__dirname, 'assets/ui'))
             copyFileSync(join(__dirname, `logo.ico`), join(__dirname, 'assets/favicon.ico')) //copy app icon
+            console.log(`✔️  Build Client UI...`)
         }
     }
 }

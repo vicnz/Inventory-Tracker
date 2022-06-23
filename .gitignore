@@ -93,7 +93,7 @@ assets/
 .routify/
 
 # dev files and folders
-/dev
+/dev-test
 /data-sets
 *dev*.sql
 app.dev.db
