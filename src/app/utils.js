@@ -42,7 +42,7 @@ module.exports.renderer = () => {
                     writeFile(savePath.filePath, parsed).then(async () => {
                         await ipcRenderer.invoke('show-message-dialog', { type: 'info', title: 'Export Successful', message: `File was save at ${savePath.filePath}` })
                     }).catch(async error => {
-                        await ipcRenderer.invoke('show-error-dialog', { title: 'Error', message: "Error Saving File" });
+                        await ipcRenderer.on('show-error-dialog', { title: 'Error', message: "Error Saving File" });
                     })
                 }
             }

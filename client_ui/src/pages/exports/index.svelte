@@ -10,6 +10,7 @@
   import Fade from "../_components/Fade.svelte";
   import { pageLeaveHandler } from "../_components/utils";
   import { exportsData as preload } from "../_components/preloads";
+  import ExportHandler from "../_components/ExportHandler.svelte";
 
   /**
    * * HANDLE PAGE EXIT
@@ -81,10 +82,14 @@
         </div>
         &nbsp;
         <!--TODO-->
-        <div class="btn-group" data-title="TODO Feature" data-toggle="tooltip">
-          <button class="btn">Import</button>
-          <button class="btn">Export</button>
-        </div>
+        <button class="btn">Import</button>
+        &nbsp;
+        <ExportHandler
+          column="id"
+          {checked}
+          dataType="csv"
+          tableName="outgoing_view"
+        />
         &nbsp;
         <button class="btn" on:click={() => $goto("/exports/audited")}>
           Audited

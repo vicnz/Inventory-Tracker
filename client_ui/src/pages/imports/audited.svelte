@@ -4,6 +4,7 @@
   import Fade from "../_components/Fade.svelte";
   import Placeholder from "../_components/PlaceholderText.svelte";
   import { importsDataAudited as preload } from "../_components/preloads";
+  import ExportHandler from "../_components/ExportHandler.svelte";
 
   /**VARIABLES*/
   let checked = [];
@@ -42,6 +43,13 @@
     <!-- @ TITLE BAR -->
     <TitleBar title="AUDITED" hasBack="/imports">
       <!-- @ ON DELETE BUTTON -->
+      <ExportHandler
+        {checked}
+        column="id"
+        dataType="csv"
+        tableName="ingoing_arrived_view"
+      />
+      &nbsp;
       <button class="btn" disabled={checked.length < 1} on:click={onDelete}>
         Delete
       </button>
