@@ -16,7 +16,7 @@
   <button class="btn" disabled={checked.length < 1} data-toggle="dropdown">
     Export
   </button>
-  <div class="dropdown-menu dropdown-menu-center">
+  <div class="dropdown-menu dropdown-menu-right">
     <div
       on:click={onExport}
       class="dropdown-item d-flex align-items-center justify-content-between"
