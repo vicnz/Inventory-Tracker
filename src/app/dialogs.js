@@ -19,34 +19,6 @@ module.exports.main = (window) => {
             ...data
         })
     })
-    /**
-     * @SHOW OPEN DIALOG
-     */
-    ipcMain.handle('show-open-dialog', async (event, data) => {
-        const options = {
-            ...data,
-            defaultPath: data.path,
-            filters: [...data.filters],
-            title: data.title,
-            message: data.message
-        }
-        const response = await dialog.showOpenDialog(window, options)
-        return response.canceled ? null : response.filePaths
-    })
-    /**
-     * @SHOW SAVE DIALOG
-     */
-    ipcMain.handle('show-save-dialog', async (event, data) => {
-        const options = {
-            ...data,
-            title: data.title,
-            message: data.message,
-            defaultPath: data.defaultPath,
-            filters: [...data.filters]
-        }
-        const response = await dialog.showSaveDialog(window, options)
-        return response.canceled ? null : response.filePaths
-    })
 }
 
 /**
@@ -80,12 +52,6 @@ module.exports.renderer = () => {
                 icon: props.icon || ''
             }
             return await ipcRenderer.invoke('show-message-dialog', { ...info });
-        },
-        openDialog: async () => {
-            //TODO
-        },
-        saveDialog: async () => {
-            //TODO
         }
     })
 }

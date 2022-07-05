@@ -53,7 +53,7 @@ const createWindow = async () => {
     /**DATABASE */
     db(mainWindow, app, database);
     /**UTILS */
-    utils(mainDialogs, app)
+    utils(mainWindow, database)
 };
 
 /**

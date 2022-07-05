@@ -74,31 +74,21 @@
   <!-- @ BACKUP  -->
   <div class="card m-0 bg-light-lm">
     <div class="content-title">BACKUP</div>
-    <p class="text-secondary">TODO Feature</p>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo placeat
-      pariatur non excepturi delectus dolor, aut rerum porro. Quas vero
-      reprehenderit tempore voluptas voluptatum non temporibus perferendis nobis
-      ipsum ex.
+      Backup Database File, Give meaningful names for your backup file, such as
+      appending a <strong>Date</strong> to remember it easily, ex.
+      <code class="code">
+        Backup_File_{new Date(Date.now())
+          .toLocaleString()
+          .replace(/[/]/g, "-")
+          .replace(/[:]/g, "-")
+          .replace(/[\,\s]/g, "_")}.db
+      </code>.
     </p>
     <br />
-    <div class="form-group form-inline">
-      <label for="file-name">File Name</label>
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Provide a file name (exclude the file type)"
-          value={backupfileName.name}
-        />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            {backupfileName.date}
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="btn btn-block" disabled>BACKUP</button>
+    <button class="btn btn-block" on:click={() => window.utils.backup()}>
+      BACKUP
+    </button>
   </div>
   <br />
   <hr />

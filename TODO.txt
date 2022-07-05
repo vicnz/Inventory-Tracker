@@ -12,7 +12,8 @@ TODOs:
 [ONGOING] - Overall UI
 [ONGOING] - Dashboard Content / Summary Data
 # PENDING AND AWAITING
-[PENDING] - Export Operation (Every Page)
+[ONGOING] - Export Operation (Every Page)
+[PENDING] - Fix (Table) Item Selection for searched items instead of selecting all of rows
 [PENDING] - Import Operation (Every Page)
 [PROPOSED] - Forecasting (Imports and Exports)
 [PROPOSED] - User Authentication
