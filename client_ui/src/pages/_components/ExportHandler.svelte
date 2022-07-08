@@ -1,13 +1,12 @@
 <script>
   export let tableName = "";
-  export let dataType = "csv";
   export let column = "id";
   export let checked = [];
 
-  async function onExport() {
+  async function onExport(type) {
     if (checked.length > 0) {
       const ids = checked.map((item) => item[0]);
-      await window.utils.export(ids, column, tableName);
+      await window.utils.export(ids, column, tableName, type);
     }
   }
 </script>
@@ -17,18 +16,16 @@
     Export
   </button>
   <div class="dropdown-menu dropdown-menu-right">
-    <div
-      on:click={onExport}
-      class="dropdown-item d-flex align-items-center justify-content-between"
-    >
-      <span>CSV</span>
-      <span class="badge">{checked.length}</span>
+    <div class="dropdown-content text-center">
+      <p class="badge badge-pill">Selected: {checked.length}</p>
     </div>
-    <div class="dropdown-content">
-      <p class="text-muted">
-        For now the only available exported format is CSV (Comma Delimited
-        Value) others formats will be added later.
-      </p>
+    <!-- Export to CSV -->
+    <div on:click={() => onExport("csv")} class="dropdown-item">CSV</div>
+    <!-- Export to HTML -->
+    <div on:click={() => onExport("html")} class="dropdown-item">HTML</div>
+    <!-- Export to Markdown -->
+    <div on:click={() => onExport("markdown")} class="dropdown-item">
+      Markdown
     </div>
   </div>
 </div>
