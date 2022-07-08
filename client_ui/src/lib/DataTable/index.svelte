@@ -125,7 +125,7 @@
   ///TODO: uncheck when one item is unchecked
   function selectAll(event) {
     if (checkedAll) {
-      checked = immutableValues;
+      checked = mutableValues;
     } else {
       checked = [];
     }
