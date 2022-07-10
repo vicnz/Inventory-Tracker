@@ -51,7 +51,7 @@ module.exports = {
             }
             console.log("✔️  Assets Folder Creation...")
 
-            copyFileSync(join(__dirname, `app.dev.db`), join(__dirname, '/assets/app.db')) // copy database file
+            copyFileSync(join(__dirname, `app.db`), join(__dirname, '/assets/app.db')) // copy database file
             // initDatabase(); /**INITIALIZE DATABASE */
             console.log(`✔️  Database Initialized...`)
             execSync(`cd client_ui && npm run build`, (error) => { if (error) console.log(error) });

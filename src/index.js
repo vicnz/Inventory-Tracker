@@ -16,7 +16,7 @@ if (require('electron-squirrel-startup')) {
 
 /**CONSTANTS */
 const isProduction = app.isPackaged;
-const databasePath = isProduction ? path.join(process.cwd(), '/resources/app/assets/app.db') : path.join(process.cwd(), '/app.dev.db');
+const databasePath = isProduction ? path.join(process.cwd(), '/resources/app/assets/app.db') : path.join(process.cwd(), '/app.test.db');
 let database = null;
 
 /**MAIN APP*/
