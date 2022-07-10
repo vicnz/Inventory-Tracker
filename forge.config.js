@@ -1,5 +1,5 @@
 // const {utils: {fromBuildIdentifier}} = require('@electron-forge/core')
-const { mkdirSync, copyFileSync, existsSync, lstatSync, readdirSync, rmSync, rm } = require('fs')
+const { mkdirSync, copyFileSync, existsSync, lstatSync, readdirSync, rmSync } = require('fs')
 const { join } = require('path')
 
 const { execSync } = require('child_process')
@@ -41,9 +41,8 @@ module.exports = {
         // }
     ],
     hooks: {
-        //generate assets
-        generateAssets: async (forgeConfig, platform, arch) => {
-            console.log('\n🕑 Generating Assets\n')
+        prePackage: async (forgeConfig, platform, arch) => {
+            console.log('\n🕑 Building Assets\n')
             if (existsSync(join(__dirname, 'assets/'))) {
                 rmSync(join(__dirname, 'assets/'), { recursive: true, force: true })
                 mkdirSync(join(__dirname, 'assets/'))
@@ -58,7 +57,9 @@ module.exports = {
             execSync(`cd client_ui && npm run build`, (error) => { if (error) console.log(error) });
             copyFolder(join(__dirname, 'client_ui/dist'), join(__dirname, 'assets/ui'))
             copyFileSync(join(__dirname, `logo.ico`), join(__dirname, 'assets/favicon.ico')) //copy app icon
+            rmSync(join(__dirname, 'client_ui/dist'), { force: true, recursive: true }) //delete dist folder
             console.log(`✔️  Build Client UI...`)
+
         }
     }
 }

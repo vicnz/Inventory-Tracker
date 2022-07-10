@@ -110,7 +110,7 @@ function parseToHTML(data, headers, title = "Exported Rows", timestamp = new Dat
             const head = items.map(item => `<td>${item.toString()}</td>`).join('\r\n')
             return `
                 <thead>
-                    <tr>${head}</tr>
+                    <tr>${head.replace(/_/g, ' ')}</tr>
                 </thead>
             `;
         }
