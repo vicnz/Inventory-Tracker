@@ -14,6 +14,7 @@
     name: "",
     date: dateString,
   };
+
   onMount(() => {
     currentTheme = halfmoon.getPreferredMode() == "dark-mode";
   });
@@ -43,14 +44,27 @@
       {/if}
       <div class="p-10" />
       <div>
-        <h4 class="text-no-wrap">
-          {currentTheme ? "🌑Welcome to the Dark Side" : "😎Here comes the sun"}
-        </h4>
+        <h3 class="text-no-wrap">
+          {currentTheme
+            ? "🌑 Welcome To The Dark Side"
+            : "😎 Here Comes The Sun"}
+        </h3>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima,
-          voluptatibus. Quisquam vero quos porro velit maiores, inventore ea.
-          Tenetur voluptates fuga sunt nihil sint quisquam odio perferendis
-          alias iure corporis?
+          {#if currentTheme}
+            <p>
+              Oh, You think darkness is your ally? You merely adopted the dark.
+              I was born in it, molded by it.
+            </p>
+            <br />
+            <em class="text-muted"> ~ Bane (Batman)</em>
+          {:else}
+            <p>
+              Happiness can be found even in the darkest of times, if one only
+              remembers to turn on the light
+            </p>
+            <br />
+            <em class="text-muted"> ~ Prof. Dumbledore (Harry Potter)</em>
+          {/if}
         </p>
       </div>
     </div>
@@ -95,21 +109,21 @@
   <br />
   <!-- @ LOAD A BACKUP FILE -->
   <div class="card m-0 bg-light-lm">
-    <div class="content-title">LOAD BACKUP</div>
-    <p class="text-secondary">TODO Feature</p>
+    <div class="content-title ">LOAD BACKUP</div>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia eos illo
-      enim sit quibusdam repellendus dicta nihil beatae voluptas error est nam
-      suscipit autem quis explicabo sapiente consectetur, voluptatum soluta.
+      Load a Backup File, make sure that the Backup originated from the same
+      app. They App will check if the Backup is Valid or Incompatible
     </p>
     <br />
-    <button class="btn btn-block" disabled>LOAD</button>
+    <button class="btn btn-block" on:click={() => window.utils.load()}
+      >LOAD</button
+    >
   </div>
   <br />
   <hr />
   <br />
   <div class="card m-0 bg-light-lm">
-    <div class="content-title">DELETE AUDITED ITEMS</div>
+    <div class="content-title">DELETE AUDITED ITEMS (DISCARDED)</div>
     <p class="text-secondary">TODO Feature</p>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo placeat
@@ -123,6 +137,19 @@
   <br />
   <div class="card m-0 bg-light-lm">
     <div class="content-title">DELETE DISCARDED (INVENTORY)</div>
+    <p class="text-secondary">TODO Feature</p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo placeat
+      pariatur non excepturi delectus dolor, aut rerum porro. Quas vero
+      reprehenderit tempore voluptas voluptatum non temporibus perferendis nobis
+      ipsum ex.
+    </p>
+  </div>
+  <br />
+  <hr />
+  <br />
+  <div class="card m-0 bg-light-lm">
+    <div class="content-title">FORECASTING (PROPOSED FEATURE)</div>
     <p class="text-secondary">TODO Feature</p>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo placeat

@@ -100,8 +100,9 @@
       {:then data}
         <div class="card m-0 p-0">
           <div class="alert alert-primary p-card rounded-0 border-0">
-            NOTE: When an item is marked as discarded/discontinoued all lying
-            data is removed,
+            NOTE: When an Inventory Item is Discarded [Warehouse and Category]
+            Information is Removed, You Can Restore These Items By Double
+            Clicking The Row And Restoring It Back
           </div>
           <DataTable
             columns={data.columns}

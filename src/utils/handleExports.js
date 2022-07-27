@@ -1,4 +1,62 @@
-const { unparse, parse } = require('./papaparse.min')
+//@ts-check
+// @ts-ignore
+const { unparse } = require('./papaparse.min.js')
+const { dialog, ipcRenderer } = require('electron')
+const { writeFile } = require('fs/promises')
+const { join } = require('path')
+/**Main Process Handle Exports */
+
+async function promptSaveFile(app, mainWindow, type, data) {
+    try {
+        let defaultExportPath = join(app.getPath('downloads'), "exports.csv")
+        let filter = { name: 'CSV (Comma Seperated Values)', extensions: ['csv'] }
+        let { columns, rows, timestamp, title } = data;
+        let exportString = "";
+
+        switch (type) {
+            case 'html':
+                defaultExportPath = join(app.getPath('downloads'), "exports.html")
+                exportString = await parseToHTML(rows, columns, "Exported HTML Rows") || ""
+                filter = { name: 'HTML (HyperText Markup Language)', extensions: ['html', 'htm'] }
+                break;
+            case 'markdown':
+                defaultExportPath = join(app.getPath('downloads'), "exports.md")
+                exportString = await parseToMarkdown(rows, columns, "Exported Markdown Rows") || ""
+                filter = { name: 'Markdown', extensions: ['md', 'mdx'] }
+                break;
+            default:
+                defaultExportPath = join(app.getPath('downloads'), "exports.csv")
+                exportString = await parsetoCSV(rows) || ""
+                filter = { name: 'CSV (Comma Separated Values)', extensions: ['csv'] }
+                break;
+        }
+
+        const prompt = await dialog.showSaveDialog(mainWindow, {
+            title: 'Export Selected Rows',
+            defaultPath: defaultExportPath,
+            filters: [filter]
+        })
+
+        if (prompt.canceled) {
+            return;
+        } else {
+            // @ts-ignore
+            writeFile(prompt.filePath, exportString?.data).then(async () => {
+                await dialog.showMessageBox(mainWindow, { title: "Exported", type: 'info', message: `📁 Exported as ${type} at ${prompt?.filePath}` })
+            }).catch(error => {
+                // @ts-ignore
+                throw new Error({ error: error, message: `Exporting "${prompt.filePath}" Failed...` })
+            })
+        }
+    } catch (err) {
+        // @ts-ignore
+        const { message, error } = err;
+        dialog.showErrorBox('Failed', `Exporting ${message} Failed...`)
+        ipcRenderer.send('log-debug', `[main]:[handleExport.js] Exports Failed ${message}`)
+    }
+}
+
+
 
 /**
  * @name parseToMarkdown
@@ -14,6 +72,7 @@ function parseToMarkdown(data, headers, title = 'Exported Rows', timestamp = new
         /**Build Markdown Header */
         function buildHeader(headers) {
             const converted = headers.join(' | ');
+            // @ts-ignore
             const headerBox = headers.map(key => ` ---- `).join(' | ')
             return `| ${converted} |\r\n| ${headerBox} |\r\n`
         }
@@ -182,6 +241,7 @@ function parsetoCSV(data, options = {}) {
 }
 
 module.exports = {
+    promptSaveFile,
     parseToHTML,
     parseToMarkdown,
     parsetoCSV

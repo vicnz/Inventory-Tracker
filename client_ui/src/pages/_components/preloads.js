@@ -7,44 +7,54 @@ export const dashboardData = async function () {
     const imports = await window?.dashboard?.imports();
     const exports = await window?.dashboard?.exports();
 
-    let totalItems = [
-        inventory?.data[0]?.total_items || 0,
-        imports?.data[0]?.total_items || 0,
-        exports?.data[0]?.total_items || 0,
-    ];
+    const inv = inventory?.data[0]
+    const imp = imports?.data[0]
+    const exp = exports?.data[0]
 
-    let totalItemsProducts = [
-        inventory?.data[0]?.max_quantity_product || 0,
-        imports?.data[0]?.max_quantity_item || 0,
-        exports?.data[0]?.max_quantity_item || 0,
-    ];
-    let totalPrice = [
-        inventory?.data[0]?.total_price || 0,
-        imports?.data[0]?.total_price || 0,
-        exports?.data[0]?.total_price || 0,
-    ];
-    let totalQuantity = [
-        inventory?.data[0]?.total_inventory_quantity || 0,
-        imports?.data[0]?.total_quantity || 0,
-        exports?.data[0]?.total_quantity || 0,
-    ];
-    let maxQuantity = [
-        inventory?.data[0]?.max_quantity || 0,
-        imports?.data[0]?.max_quantity || 0,
-        exports?.data[0]?.max_quantity || 0,
-    ];
+    const totalItemCount = [
+        { name: 'inventory', value: inv?.total_items || 0 },
+        { name: 'imports', value: imp?.total_items || 0 },
+        { name: 'exports', value: exp?.total_items || 0 },
+    ]
+    const qtyTotal = [
+        { name: 'inventory', value: inv?.total_inventory_quantity || 0 },
+        { name: 'imports', value: imp?.total_quantity || 0 },
+        { name: 'exports', value: exp?.total_quantity || 0 },
+    ]
+    const qtyMaxProduct = [
+        { name: 'inventory', value: inv?.max_quantity || 0, product: inv?.max_quantity_product || 'N/A' },
+        { name: 'imports', value: imp?.max_quantity || 0, product: imp?.max_quantity_item || 'N/A' },
+        { name: 'exports', value: exp?.max_quantity || 0, product: exp?.max_quantity_item || 'N/A' },
+    ]
+    const priceTotal = [
+        { name: 'inventory', value: inv?.total_price || 0 },
+        { name: 'imports', value: imp?.total_price || 0 },
+        { name: 'exports', value: exp?.total_price || 0 },
+    ]
+    const priceMaxProduct = [
+        { name: 'inventory', value: inv?.max_price || 0, product: inv?.max_priced_item || 'N/A' },
+        { name: 'imports', value: imp?.max_price || 0, product: imp?.max_price_item || 'N/A' },
+        { name: 'exports', value: exp?.max_price || 0, product: exp?.max_price_item || 'N/A' }
+    ]
+    const auditedProducts = {
+        audited: {
+            imports: imp?.audited || 0,
+            exports: exp?.audited || 0
+        },
+        unaudited: {
+            imports: imp?.unaudited || 0,
+            exports: exp?.unaudited || 0
+        }
+    }
 
     return {
-        itemTotals: totalItemsProducts,
-        totals: totalItems,
-        price: totalPrice,
-        quantity: totalQuantity,
-        maxQty: maxQuantity,
-        audits: {
-            unaudited: [imports?.data[0]?.unaudited, exports?.data[0]?.unaudited] || [0, 0],
-            audited: [imports?.data[0]?.audited, exports?.data[0]?.audited] || [0, 0]
-        }
-    };
+        count: totalItemCount,
+        quantity: qtyTotal,
+        quantityItem: qtyMaxProduct,
+        price: priceTotal,
+        priceItem: priceMaxProduct,
+        audit: auditedProducts
+    }
 }
 
 /**

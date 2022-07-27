@@ -63,10 +63,8 @@
       {:then data}
         <div class="card m-0 p-0">
           <div class="alert alert-primary rounded-0 border-0">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-            consectetur quia obcaecati pariatur delectus sapiente itaque sunt.
-            Ex voluptate cumque fuga. Maiores nesciunt repellat molestiae.
-            Reiciendis maiores tenetur vel laudantium!
+            NOTE: All audited items can no longer be modified, updated as they
+            are already marked as FINAL.
           </div>
           <DataTable
             columns={data.columns}

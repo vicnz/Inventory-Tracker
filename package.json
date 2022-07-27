@@ -1,7 +1,7 @@
 {
   "name": "Warehouse Inventory Tracker",
   "productName": "warehouse_inventory_tracker",
-  "version": "0.8.5",
+  "version": "1.0.0",
   "description": "Warehouse Inventory Tracker, Tracks incoming/outgoing/current stocked items in warehouses",
   "main": "src/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "lint": "echo \"No linting configured\""
   },
   "keywords": [
-    "Electronjs"
+    "Electronjs", "Electron-Forge"
   ],
   "author": {
     "name": "adamg",
