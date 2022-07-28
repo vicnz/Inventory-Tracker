@@ -10,10 +10,6 @@
 
   //VARIABLES
   $: currentTheme = null;
-  $: backupfileName = {
-    name: "",
-    date: dateString,
-  };
 
   onMount(() => {
     currentTheme = halfmoon.getPreferredMode() == "dark-mode";
@@ -22,9 +18,6 @@
   function onThemeChange(event) {
     halfmoon.toggleDarkMode();
     currentTheme = !currentTheme;
-  }
-  function onBackup(event) {
-    //TODO
   }
 </script>
 
@@ -112,7 +105,7 @@
     <div class="content-title ">LOAD BACKUP</div>
     <p>
       Load a Backup File, make sure that the Backup originated from the same
-      app. They App will check if the Backup is Valid or Incompatible
+      app. The App will check if the Backup is Valid or Incompatible
     </p>
     <br />
     <button class="btn btn-block" on:click={() => window.utils.load()}

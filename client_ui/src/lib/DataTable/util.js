@@ -178,19 +178,6 @@ function search(data, query, column, type) {
         }
     })
 }
-// function search(data, query, column) {
-
-//     return new Promise((res, rej) => {
-//         try {
-//             let searchQuery = query.toString().trim().toLowerCase()
-//             let pattern = new RegExp(query, 'gi')
-//             pattern = new RegExp(searchQuery, 'gi')
-//             return res(data.filter(element => element[column].toString().toLowerCase().match(pattern)))
-//         } catch (err) {
-//             return rej([])
-//         }
-//     });
-// }
 
 /**
  * Parse if Format (Type) is (currency)

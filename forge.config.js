@@ -1,10 +1,7 @@
-// const {utils: {fromBuildIdentifier}} = require('@electron-forge/core')
 const { mkdirSync, copyFileSync, existsSync, lstatSync, readdirSync, rmSync } = require('fs')
 const { join } = require('path')
 
 const { execSync } = require('child_process')
-/**GENERATING DATABASE */
-// const Database = require('better-sqlite3')
 const { ignoreLists } = require('./forge.utils')
 
 module.exports = {
@@ -78,17 +75,3 @@ function copyFolder(from, to) {
         })
     }
 }
-
-/**
- * CREATE DATABASE FILE TODO Build Differently
- * @param {any} database
- */
-// function initDatabase() {
-//     closeSync(openSync(join(__dirname, '/assets/app.db'))); /**CREATE DATABASE FILE */
-//     const path = join(__dirname, 'assets/app.db')
-//     let database = new Database(path)
-
-//     /**CREATE QUERY */
-//     create(database, createStatements)
-//     database.close()
-// }
