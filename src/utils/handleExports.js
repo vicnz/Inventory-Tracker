@@ -1,7 +1,7 @@
 //@ts-check
 // @ts-ignore
 const { unparse } = require('./papaparse.min.js')
-const { dialog, ipcRenderer } = require('electron')
+const { dialog, ipcRenderer, shell } = require('electron')
 const { writeFile } = require('fs/promises')
 const { join } = require('path')
 /**Main Process Handle Exports */
@@ -42,7 +42,12 @@ async function promptSaveFile(app, mainWindow, type, data) {
         } else {
             // @ts-ignore
             writeFile(prompt.filePath, exportString?.data).then(async () => {
-                await dialog.showMessageBox(mainWindow, { title: "Exported", type: 'info', message: `📁 Exported as ${type} at ${prompt?.filePath}` })
+                const result = await dialog.showMessageBox(mainWindow, { title: "Exported", type: 'info', message: `📁 Exported as ${type} at ${prompt?.filePath}`, buttons: ['Open', 'Close'] })
+                if (result.response === 0) {
+                    //@ts-ignore
+                    shell.showItemInFolder(prompt?.filePath)
+                }
+                return;
             }).catch(error => {
                 // @ts-ignore
                 throw new Error({ error: error, message: `Exporting "${prompt.filePath}" Failed...` })

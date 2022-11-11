@@ -15,6 +15,7 @@ const { main: trafficLights, } = require('./app/traffic_light')
 const { main: mainDialogs } = require('./app/dialogs')
 const { main: db } = require('./app/database');
 const { main: utils } = require('./app/utils')
+const { Tray } = require('../src/app/tray')
 
 /**WINDOWS SPECIFIC */
 if (require('electron-squirrel-startup')) {
@@ -31,7 +32,7 @@ let server = null; //Server Reference
 let clientRendererPath = isProduction ? UI_PATH : path.join(__dirname, '/client_ui');
 
 const serve = serveStatic(clientRendererPath, { index: ['index.html'] }) // * Serve static
-
+const tray = null;
 const createWindow = async () => {
     mainWindow = new BrowserWindow({
         width: 900,
@@ -49,6 +50,7 @@ const createWindow = async () => {
 
     if (isProduction) {
         mainWindow.loadURL('http://localhost:9080');
+        Tray(tray, app, mainWindow);
     } else {
         mainWindow.loadURL('http://localhost:5000');
         mainWindow.webContents.openDevTools();
@@ -98,7 +100,7 @@ async function initApp() {
             database = new Database(path.join(app.getPath('userData'), 'app.db'))
         }
     } else {
-        database = new Database(path.join(process.cwd(), 'app.test.db'))
+        database = new Database(path.join(process.cwd(), 'app.test.db'), { verbose: console.log })
     }
 
     /**CREATE SERVER AND DATABASE (Production) */
@@ -148,5 +150,6 @@ app.on('activate', async () => {
         await initApp()
     }
 });
+
 
 

@@ -16,7 +16,6 @@ module.exports.main = async (mainWindow, database) => {
 
     /**Handle Load Database File*/
     ipcMain.on('load-backup', async (event, data) => {
-        //TODO
         await handleLoad(app, mainWindow, database)
     });
 
