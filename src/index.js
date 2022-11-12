@@ -15,7 +15,8 @@ const { main: trafficLights, } = require('./app/traffic_light')
 const { main: mainDialogs } = require('./app/dialogs')
 const { main: db } = require('./app/database');
 const { main: utils } = require('./app/utils')
-const { Tray } = require('../src/app/tray')
+//BUGGY CODE
+// const { Tray } = require('../src/app/tray')
 
 /**WINDOWS SPECIFIC */
 if (require('electron-squirrel-startup')) {
@@ -32,7 +33,6 @@ let server = null; //Server Reference
 let clientRendererPath = isProduction ? UI_PATH : path.join(__dirname, '/client_ui');
 
 const serve = serveStatic(clientRendererPath, { index: ['index.html'] }) // * Serve static
-const tray = null;
 const setSingleLock = app.requestSingleInstanceLock()
 const createWindow = async () => {
     mainWindow = new BrowserWindow({
@@ -56,8 +56,8 @@ const createWindow = async () => {
         mainWindow.webContents.openDevTools();
     }
 
-    //@ts-ignore
-    await Tray(tray, app, mainWindow, logger);
+    /**BUGGY CODE */
+    // await Tray(app, mainWindow, logger);
 
     /**
      * ?IPCMAIN HANDLERS
