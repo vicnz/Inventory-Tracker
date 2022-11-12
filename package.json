@@ -1,22 +1,23 @@
 {
-  "name": "Inventory Tracker",
-  "productName": "warehouse-inv-tracker",
-  "version": "0.5.0",
+  "name": "Warehouse Inventory Tracker",
+  "productName": "warehouse_inventory_tracker",
+  "version": "1.0.2",
   "description": "Warehouse Inventory Tracker, Tracks incoming/outgoing/current stocked items in warehouses",
   "main": "src/index.js",
   "scripts": {
-    "install-all": "npm install && install-routify",
-    "install-routify": "cd client_ui && npm install",
-    "package-client": "cd client_ui && npm run build",
-    "dev": "cd client_ui && npm run dev",
-    "start": "electron-forge start",
+    "install:all": "npm install && install-routify",
+    "install:routify": "cd client_ui && npm install",
+    "package:client": "cd client_ui && npm run build",
+    "dev:client": "cd client_ui && npm run dev",
+    "dev": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [
-    "Electronjs"
+    "Electronjs",
+    "Electron-Forge"
   ],
   "author": {
     "name": "adamg",

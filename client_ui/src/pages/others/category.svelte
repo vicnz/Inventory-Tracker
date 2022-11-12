@@ -5,6 +5,7 @@
   import Fade from "../_components/Fade.svelte";
   import Input from "../_components/Input.svelte";
   import { fly } from "svelte/transition";
+  import ExportHandler from "../_components/ExportHandler.svelte";
 
   //PRELOADED DATA
   async function preloadData() {
@@ -228,12 +229,16 @@
         </div>
         &nbsp;
         <!-- TODO -->
-        <div class="btn-group" data-title="TODO Feature" data-toggle="tooltip">
-          <!-- @ IMPORT DATA -->
-          <button class="btn">Import</button>
-          <!-- @ EXPORT DATA -->
-          <button class="btn">Export</button>
-        </div>
+        <button class="btn" data-toggle="tooltip" data-title="TODO feature"
+          >Import</button
+        >
+        &nbsp;
+        <ExportHandler
+          column={"id"}
+          {checked}
+          dataType="csv"
+          tableName="category_items"
+        />
       </div>
     </Header>
     <br />

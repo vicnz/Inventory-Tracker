@@ -109,6 +109,11 @@
             });
             return;
           } else {
+            if (isRestoring) {
+              await window?.inventory?.discardedDelete([
+                restoreData.discard_id,
+              ]);
+            }
             /**INSERTION SUCCESSFUL RETURN BACK TO INVENTORY PAGE*/
             isSaving = true;
             $goto("/inventory");

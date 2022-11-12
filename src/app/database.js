@@ -87,6 +87,22 @@ module.exports.main = (mainWindow, app, database) => {
         }
     })
 
+    /**GET EXPORT DATA */
+    ipcMain.handle('get-many', (event, data) => {
+        const { sql, params } = data
+        let results = [];
+        params.forEach((id) => {
+            try {
+                const stmt = database.prepare(sql)
+                const result = stmt.get(id)
+                results.push(result)
+            } catch (err) {
+                return { error: err }
+            }
+        })
+        return results;
+    })
+
     //handle back-ups
     ipcMain.handle('back-up', (event, data) => {
         const { path } = data

@@ -9,10 +9,11 @@ TODOs:
 [DONE] - Categories UI
 [DONE] - Clients UI
 [DONE] - Warehouse UI
-[ONGOING] - Overall UI
-[ONGOING] - Dashboard Content / Summary Data
+[DONE] - Export Operation (Every Page)
+[DONE] - Fix (Table) Item Selection for searched items instead of selecting all of rows
+[FINALIZING] - Overall UI
+[FINALIZING] - Dashboard Content / Summary Data
 # PENDING AND AWAITING
-[PENDING] - Export Operation (Every Page)
 [PENDING] - Import Operation (Every Page)
 [PROPOSED] - Forecasting (Imports and Exports)
 [PROPOSED] - User Authentication

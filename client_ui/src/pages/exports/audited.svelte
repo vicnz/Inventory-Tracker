@@ -4,6 +4,7 @@
   import Fade from "../_components/Fade.svelte";
   import Placeholder from "../_components/PlaceholderText.svelte";
   import { exportsDataAudited as preload } from "../_components/preloads";
+  import ExportHandler from "../_components/ExportHandler.svelte";
 
   /**VARIABLES*/
   let checked = [];
@@ -42,6 +43,13 @@
     <!-- @ TITLE BAR -->
     <TitleBar title="AUDITED" hasBack="/exports">
       <!-- @ ON DELETE BUTTON -->
+      <ExportHandler
+        {checked}
+        column="id"
+        dataType="csv"
+        tableName="outgoing_arrived_view"
+      />
+      &nbsp;
       <button class="btn" disabled={checked.length < 1} on:click={onDelete}>
         Delete
       </button>
@@ -55,10 +63,8 @@
       {:then data}
         <div class="card m-0 p-0">
           <div class="alert alert-primary rounded-0 border-0">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
-            consectetur quia obcaecati pariatur delectus sapiente itaque sunt.
-            Ex voluptate cumque fuga. Maiores nesciunt repellat molestiae.
-            Reiciendis maiores tenetur vel laudantium!
+            NOTE: All audited items can no longer be modified, updated as they
+            are already marked as FINAL.
           </div>
           <DataTable
             columns={data.columns}

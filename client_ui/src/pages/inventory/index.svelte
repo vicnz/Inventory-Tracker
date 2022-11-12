@@ -9,6 +9,7 @@
   import Fade from "../_components/Fade.svelte";
   import { pageLeaveHandler } from "../_components/utils";
   import { inventoryData as preload } from "../_components/preloads";
+  import ExportHandler from "../_components/ExportHandler.svelte";
   /**
    * * HANDLE PAGE EXIT
    */
@@ -43,7 +44,6 @@
       if (dialog.response === 0) {
         let ids = checked.map((item) => item[0]);
         /**INITIATE ITEM DELETION*/
-        console.log(ids);
         let result = await window.inventory.delete(ids);
         if (result?.error) {
           /**IF ERROR OCCURS ABORT DELETION*/
@@ -78,15 +78,21 @@
           </button>
           <!--@ DELETE (INVENTORY) ITEMS-->
           <button class="btn" on:click={onDelete} disabled={checked.length < 1}>
-            Delete
+            Discard
           </button>
         </div>
         &nbsp;
         <!--TODO-->
-        <div class="btn-group" data-title="TODO Feature" data-toggle="tooltip">
-          <button class="btn">Import</button>
-          <button class="btn">Export</button>
-        </div>
+        <button class="btn" data-title="TODO Feature" data-toggle="tooltip"
+          >Import</button
+        >
+        &nbsp;
+        <ExportHandler
+          {checked}
+          dataType="csv"
+          tableName={"inventory"}
+          column="id"
+        />
         &nbsp;
         <button class="btn" on:click={() => $goto("/inventory/discarded")}>
           Discontinued

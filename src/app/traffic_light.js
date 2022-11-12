@@ -14,7 +14,7 @@ module.exports.main = (mainWindow, app) => {
             message: 'Exit Application?',
             buttons: ['OK', 'Cancel']
         })
-        if (reply.response === 0) app.exit();
+        if (reply.response === 0) app.quit();
     })
     ipcMain.on('minimize', (event, data) => {
         mainWindow.minimize(); //minimize window

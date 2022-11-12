@@ -4,6 +4,7 @@
   import Customers from "./_clients/Customers.svelte";
   import { fly } from "svelte/transition";
   import Placeholder from "../_components/PlaceholderText.svelte";
+  import ExportHandler from "../_components/ExportHandler.svelte";
 
   //VARIABLES
   let updateTrigger = false;
@@ -135,7 +136,7 @@
         on:click={() => (activeTab = 1)}>Customers</button
       >
     </div>
-    <div class="div">
+    <div class="btn-toolbar">
       <div class="btn-group">
         <button class="btn" on:click={gotoClient}>Add</button>
         <button
@@ -148,10 +149,18 @@
       </div>
       &nbsp;
       <!-- TODO -->
-      <div class="btn-group" data-title="TODO Feature" data-toggle="tooltip">
-        <button class="btn">Imports</button>
-        <button class="btn">Exports</button>
-      </div>
+      <button class="btn" data-toggle="tooltip" data-title="TODO feature"
+        >Imports</button
+      >
+      &nbsp;
+      <ExportHandler
+        checked={checked.data}
+        column="id"
+        dataType="csv"
+        tableName={checked.type === "supplier"
+          ? "clients_supplier"
+          : "clients_customer"}
+      />
     </div>
   </div>
 
