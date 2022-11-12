@@ -33,6 +33,7 @@ let clientRendererPath = isProduction ? UI_PATH : path.join(__dirname, '/client_
 
 const serve = serveStatic(clientRendererPath, { index: ['index.html'] }) // * Serve static
 const tray = null;
+const setSingleLock = app.requestSingleInstanceLock()
 const createWindow = async () => {
     mainWindow = new BrowserWindow({
         width: 900,
@@ -49,12 +50,14 @@ const createWindow = async () => {
     });
 
     if (isProduction) {
-        mainWindow.loadURL('http://localhost:9080');
-        Tray(tray, app, mainWindow);
+        mainWindow.loadURL(`http://localhost:${server?.address()?.port}`);
     } else {
         mainWindow.loadURL('http://localhost:5000');
         mainWindow.webContents.openDevTools();
     }
+
+    //@ts-ignore
+    await Tray(tray, app, mainWindow, logger);
 
     /**
      * ?IPCMAIN HANDLERS
@@ -108,8 +111,10 @@ async function initApp() {
         server = http.createServer((request, response) => {
             serve(request, response)
         })
-        server.listen(9080, (err) => {
+        server.listen(0, (err) => {
             logger.error(`[main]:[index.js] Failed To Start Server, ${err?.message}`)
+        }).on('listening', () => {
+            logger.info(`[main]:[index.js] Client Server Started At Port ${server.address().port}`)
         })
     }
     createWindow()
@@ -118,6 +123,17 @@ async function initApp() {
 /**
  *? CREATE WINDOW
  */
+
+if (!setSingleLock) {
+    app.quit();
+} else {
+    app.on('second-instance', (e, cmdLine, workingDir) => {
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore()
+            mainWindow.focus()
+        }
+    })
+}
 
 app.on('ready', async () => {
     await initApp()
